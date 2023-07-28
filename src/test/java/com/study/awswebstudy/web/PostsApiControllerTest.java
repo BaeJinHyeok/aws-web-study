@@ -63,4 +63,14 @@ class PostsApiControllerTest {
 
 
     }
+
+    @Test
+    public void Posts_수정된다() throw Exception {
+        //given
+        Posts savedPosts = postsRepository.save(Posts.builder()
+                .title(title)
+                .content(content)
+                .author(authoor)
+                .build());
+    }
 }
