@@ -1,5 +1,6 @@
 package com.study.awswebstudy.web.dto;
 
+import com.study.awswebstudy.domain.posts.Posts;
 import lombok.Getter;
 
 @Getter
@@ -11,7 +12,7 @@ public class PostsResponseDto {
     private String author;
 
 
-    public PostsReponseDto(Posts entity){
+    public PostsResponseDto(Posts entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();

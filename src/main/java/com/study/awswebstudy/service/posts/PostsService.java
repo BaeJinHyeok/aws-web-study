@@ -1,9 +1,10 @@
 package com.study.awswebstudy.service.posts;
 
+import com.study.awswebstudy.domain.posts.Posts;
 import com.study.awswebstudy.domain.posts.PostsRepository;
 import com.study.awswebstudy.web.dto.PostsResponseDto;
 import com.study.awswebstudy.web.dto.PostsSaveRequestDto;
-import com.study.awswebstudy.web.dto.PostsUpdateResponseDto;
+import com.study.awswebstudy.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class PostsService {
     }
 
     @Transactional
-    public long update(Long id, PostsUpdateResponseDto responseDto) {
+    public long update(Long id, PostsUpdateRequestDto responseDto) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+ id));
         posts.update(responseDto.getTitle(), responseDto.getContent());
 

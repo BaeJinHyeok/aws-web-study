@@ -1,7 +1,9 @@
 package com.study.awswebstudy.web;
 
 import com.study.awswebstudy.service.posts.PostsService;
+import com.study.awswebstudy.web.dto.PostsResponseDto;
 import com.study.awswebstudy.web.dto.PostsSaveRequestDto;
+import com.study.awswebstudy.web.dto.PostsUpdateRequestDto;
 import jakarta.persistence.PostUpdate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +20,12 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts/{id}")
-    public long update(@PathVariable long id, @RequestBody PostUpdateRequestDto requestDto) {
+    public long update(@PathVariable long id, @RequestBody PostsUpdateRequestDto requestDto) {
         return postsService.update(id, requestDto);
     }
 
     @GetMapping("/api/v1/posts/{id}")
-    public PostResponseDto findById (@PathVariable long id){
-        return PostsService.findById(id);
+    public PostsResponseDto findById (@PathVariable long id){
+        return postsService.findById(id);
     }
 }

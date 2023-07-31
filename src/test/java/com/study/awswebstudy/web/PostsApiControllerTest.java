@@ -3,7 +3,7 @@ package com.study.awswebstudy.web;
 import com.study.awswebstudy.domain.posts.Posts;
 import com.study.awswebstudy.domain.posts.PostsRepository;
 import com.study.awswebstudy.web.dto.PostsSaveRequestDto;
-import com.study.awswebstudy.web.dto.PostsUpdateResponseDto;
+import com.study.awswebstudy.web.dto.PostsUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -71,23 +70,23 @@ class PostsApiControllerTest {
     public void Posts_수정된다() throws Exception {
         //given
         Posts savedPosts = postsRepository.save(Posts.builder()
-                .title(title)
-                .content(content)
-                .author(authoor)
+                .title("title")
+                .content("content")
+                .author("author")
                 .build());
 
         Long updateId = savedPosts.getId();
         String expectedTitle = "title2";
         String expectedContent = "content2";
 
-        PostsUpdateResponseDto requestDto = PostsUpdateResponseDto.builder()
+        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
                 .title(expectedTitle)
                 .content(expectedContent)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 
-        HttpEntity<PostsUpdateResponseDto> requestEntity = new HttpEntity<>(requestDto);
+        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
