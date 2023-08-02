@@ -1,6 +1,8 @@
 package com.study.awswebstudy.domain.posts;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.study.awswebstudy.service.posts.PostsService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,4 +45,29 @@ class PostsRepositoryTest {
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getContent()).isEqualTo(content);
     }
+
+
+    @Test
+    void BaseTimeEntity_등록() {
+        //given
+        LocalDateTime now = LocalDateTime.of(2018,6,4,0,0,0);
+
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+        //when
+        List<Posts> postsList = postsRepository.findAll();
+
+        //then
+        Posts posts = postsList.get(0);
+
+        System.out.println(">>>>>>>>>>>>>> createdeDate = "+posts.getCreatedDate()+
+                ", ModifiedDate ="+posts.getModifiedDate());
+
+        assertThat(posts.getCreatedDate()).isAfter(now);
+        assertThat(posts.getModifiedDate()).isAfter(now);
+    }
+
 }

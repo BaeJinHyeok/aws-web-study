@@ -1,5 +1,6 @@
 package com.study.awswebstudy.domain.posts;
 
+import com.study.awswebstudy.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity // *주요* JPA 어노테이션 테이블과 링크될 클래스임을 나타냄. 카멜케이스 이름을 언더스코어네이밍(_) 으로 테이블이름을 매칭함.
 // Entity 클래스에서는 절대 Setter 메소드를 만들지 않는걸 권장.
 // 대신 해당 필드의 값이 변경이 필요하면 명확히 그 목적과 의도를 나타낼 수 있는 메소드를 추가해야만 함. 차후 기능 변경 시 복잡해지기 때문.
-public class Posts { //실제 DB의 테이블과 매칭될 클래스. Entity 클래스.
+public class Posts  extends BaseTimeEntity { //실제 DB의 테이블과 매칭될 클래스. Entity 클래스.
 
     @Id // 해당 테이블의 PK 필드를 나타냄
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성규칙을 나타냄 Springboot 2.0에서는 추가해야만 auto increment
