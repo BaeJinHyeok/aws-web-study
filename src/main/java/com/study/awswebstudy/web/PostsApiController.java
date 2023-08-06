@@ -4,7 +4,6 @@ import com.study.awswebstudy.service.posts.PostsService;
 import com.study.awswebstudy.web.dto.PostsResponseDto;
 import com.study.awswebstudy.web.dto.PostsSaveRequestDto;
 import com.study.awswebstudy.web.dto.PostsUpdateRequestDto;
-import jakarta.persistence.PostUpdate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
