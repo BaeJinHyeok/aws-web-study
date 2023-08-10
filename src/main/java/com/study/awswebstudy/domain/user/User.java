@@ -12,7 +12,7 @@ import javax.management.relation.Role;
 @NoArgsConstructor
 @Entity
 public class User extends BaseTimeEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,14 +28,14 @@ public class User extends BaseTimeEntity {
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private UserRole userrole;
     
     @Builder
-    public User(String name, String email, String picture, Role role) {
+    public User(String name, String email, String picture, UserRole userrole) {
         this.name = name;
         this.email = email;
         this.picture = picture;
-        this.role = role;
+        this.userrole = userrole;
     }
     
     public User update(String name, String picture){
@@ -46,6 +46,6 @@ public class User extends BaseTimeEntity {
     }
     
     public String getRoleKey() {
-        return this.role.getRoleName();
+        return this.userrole.getKey();
     }
 }

@@ -21,6 +21,18 @@
             <div class="col-md-6">
                 <a href="/posts/save" role="button"
                    class="btn btn-primary">글 등록</a>
+                {{#userName}}
+<!--            머스테치는 다른 언어와 같은 if문(if userName != null 등)을 제공하지않음. true/false만 판단 -> 머스테치에서는 항상 최종값만 넘겨줘야함 -> userName이 있으면 노출시키도록 구성-->
+                    Logged in as: <span id="user">{{userName}}</span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+<!--                스프링 시큐리티에서 기본적으로 제공하는 로그아웃URL임. 즉, 개발자가 별도로 저 URL에 해당하는 컨트롤러를 만들 필요가 없음. SecurityConfig 클래스에서 별도로 URL 을 변경가능. 허나 기본사용-->
+                {{/userName}}
+                {{^userName}}
+<!--                    머스테치에서는 해당값이 존재하지않는 경우 ^ 를 사용함. userName 이 없다면 로그인 버튼을 노출시킴.-->
+                    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+<!--                스프링 시큐리티에서 기본으로 제공하는 로그인 URL. 로그아웃URL과 마찬가지로 개발자가 별도 컨트롤러를 생성할 필요가없음.-->
+                    <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+                {{/userName}}
             </div>
         </div>
         <br>

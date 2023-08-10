@@ -1,11 +1,13 @@
 package com.study.awswebstudy.config.auth.dto;
 
-import com.study.awswebstudy.domain.user.Role;
+import com.study.awswebstudy.domain.user.UserRole;
 import com.study.awswebstudy.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Map;
+
+;
 
 @Getter
 public class OAuthAttributes {
@@ -14,6 +16,7 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String picture;
+
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes,  String nameAttributeKey,
@@ -48,7 +51,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
-                .role(Role.GUEST)
+                .userrole(UserRole.GUEST)
                 .build();
     }
 
