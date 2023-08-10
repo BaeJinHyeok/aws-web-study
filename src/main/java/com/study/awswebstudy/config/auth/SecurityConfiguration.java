@@ -22,7 +22,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorizeRequests ->
+                .authorizeRequests(authorizeRequests ->                              //authorizeHttpRequests 는 구버전...
                         authorizeRequests
                                 .requestMatchers("/", "/css/**", "/image/**", "/js/**", "/h2-console/**").permitAll()
                                 .requestMatchers("/api/v1/**").hasRole(UserRole.USER.name())

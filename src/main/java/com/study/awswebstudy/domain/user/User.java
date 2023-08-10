@@ -46,6 +46,6 @@ public class User extends BaseTimeEntity {
     }
     
     public String getRoleKey() {
-        return this.userrole.getKey();
+        return this.userrole.getKey(); // Role role 사용시 다른 클래스와 충돌 때문에 getKey() 명령어가 입력안됐었음. 현재 Role -> UserRole로 변경 후 입력 잘 됨.
     }
 }
