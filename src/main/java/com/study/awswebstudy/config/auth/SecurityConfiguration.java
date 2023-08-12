@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                         .requestMatchers(mvcMatcherBuilder.pattern("/user")).hasRole(UserRole.USER.name())
                 );
         return http.build();
+        //git test
     }
 //    @Bean
 //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
