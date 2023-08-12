@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -20,28 +22,39 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector).servletPath("/path");
         http
-                .authorizeRequests(authorizeRequests ->                              //authorizeHttpRequests 는 구버전...
-                        authorizeRequests
-                                .requestMatchers("/", "/css/**", "/image/**", "/js/**", "/h2-console/**").permitAll()
-                                .requestMatchers("/api/v1/**").hasRole(UserRole.USER.name())
-                                .anyRequest().authenticated()
-                )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .permitAll()
-                )
-                .logout(logout ->
-                        logout
-                                .logoutUrl("/logout")
-                                .logoutSuccessHandler(logoutSuccessHandler())
-                                .addLogoutHandler(logoutHandler())
-                )
-                .httpBasic(withDefaults());
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers(mvcMatcherBuilder.pattern("/")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/user")).hasRole(UserRole.USER.name())
+                );
         return http.build();
     }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeHttpRequests((authorize) -> authorize
+//                                .requestMatchers("/", "/css/**", "/image/**", "/js/**", "/h2-console/**").permitAll()
+//                                .requestMatchers("/api/v1/**").hasRole(UserRole.USER.name())
+//                                .anyRequest().authenticated()
+//                )
+//                .formLogin(formLogin ->
+//                        formLogin
+//                                .loginPage("/login")
+//                                .permitAll()
+//                )
+//                .logout(logout ->
+//                        logout
+//                                .logoutUrl("/logout")
+//                                .logoutSuccessHandler(logoutSuccessHandler())
+//                                .addLogoutHandler(logoutHandler())
+//                )
+//                .httpBasic(withDefaults());
+//        return http.build();
+//    }
+
+
 
     @Bean
     public LogoutHandler logoutHandler() {

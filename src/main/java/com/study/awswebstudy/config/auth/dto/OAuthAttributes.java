@@ -1,7 +1,7 @@
 package com.study.awswebstudy.config.auth.dto;
 
 import com.study.awswebstudy.domain.user.UserRole;
-import com.study.awswebstudy.domain.user.User;
+import com.study.awswebstudy.domain.user.Users;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -46,8 +46,8 @@ public class OAuthAttributes {
     // toEntity => User 엔티티를 생성함 -> OAuthAttributes에서 엔티티를 생성하는 시점은 "처음 가입할때" 임!
     // 가입할 때의 기본 권한을 GUEST로 주기 위해서 role 빌더값에는 Role.GUEST를 사용함
     // OAuthAttributes 클래스 생성이 끝났으면 같은 패키지에 SessionUser 클래스를 생성함.
-    public User toEntity(){
-        return User.builder()
+    public Users toEntity(){
+        return Users.builder()
                 .name(name)
                 .email(email)
                 .picture(picture)

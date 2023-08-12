@@ -2,7 +2,7 @@ package com.study.awswebstudy.config.auth;
 
 import com.study.awswebstudy.config.auth.dto.OAuthAttributes;
 import com.study.awswebstudy.config.auth.dto.SessionUser;
-import com.study.awswebstudy.domain.user.User;
+import com.study.awswebstudy.domain.user.Users;
 import com.study.awswebstudy.domain.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,
                 oAuth2user.getAttributes());
 
-        User user = saveOrUpdate(attributes);
+        Users user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
         // 세션에 사용자 정보를 저장하기 위한 DTO 클래스. User 클래스를 쓰지 않고 새로만들어 쓰는 이유는 나중에..
         //  이유 -> Failed to convert from type 에러 발생
@@ -50,8 +50,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     }
 
-    private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail()).map(entity -> entity.update(attributes.getName(), attributes.getPicture())).orElse(attributes.toEntity());
+    private Users saveOrUpdate(OAuthAttributes attributes) {
+        Users user = userRepository.findByEmail(attributes.getEmail()).map(entity -> entity.update(attributes.getName(), attributes.getPicture())).orElse(attributes.toEntity());
 
         return userRepository.save(user);
     }
