@@ -10,6 +10,9 @@ public class AwsWebStudyApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AwsWebStudyApplication.class, args);
+
+        //String test = org.springframework.core.SpringVersion.getVersion();
+        //System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Spring version :"+ test);
     }
 
 }
