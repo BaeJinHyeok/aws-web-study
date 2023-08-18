@@ -5,6 +5,7 @@ import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,13 +19,15 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
+import static org.hibernate.query.sqm.tree.SqmNode.log;
+import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity  // Spring Security() 설정들을 활성화 시켜줌.
@@ -32,35 +35,71 @@ public class SecurityConfiguration {
     private ClientRegistrationRepository clientRegistrationRepository;
     private final CustomOAuth2UserService customOAuth2UserService;
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests(authorizeRequests -> authorizeRequests
+//                        .mvcMatchers("/", "/css/**", "/image/**", "/js/**", "/h2-console/**").permitAll()
+//                        .mvcMatchers("/user").hasRole(UserRole.USER.name())
+//                )
+//                .oauth2Login(oauth2Login -> oauth2Login
+//                        .loginPage("/login/oauth2")
+//                )
+//                .csrf(AbstractHttpConfigurer::disable);
+//        return http.build();
+//    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf().disable()
+                //.httpBasic().disable()
+                .csrf(c -> {
+                    c.csrfTokenRepository(customTokenRepository());
+                })
+                //.csrf().disable()
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login/oauth2"))
                 //.authorizeHttpRequests(authorize -> authorize
-                //        .requestMatchers("/", "/css/**", "/image/**", "/js/**", "/h2-console/**").permitAll())
+                //        .requestMatchers(new AntPathRequestMatcher("/", "css/**", "/image/**", "/js/**", "/h2-console/**")).permitAll())
 //                .securityContext((securityContext) -> securityContext
 //                        .requireExplicitSave(true)
                 .securityContext((securityContext) -> securityContext
                         .securityContextRepository(new RequestAttributeSecurityContextRepository())
-
 
                 );
 
         return http.build();
     }
 
-    private LogoutSuccessHandler oidcLogoutSuccessHandler() {
-        OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
-                new OidcClientInitiatedLogoutSuccessHandler(this.clientRegistrationRepository);
+    private CsrfTokenRepository customTokenRepository() {
+        implements CsrfTokenRepository {
+            @Override
+            public CsrfToken generateToken(HttpServletRequest request){
+                log.info(1);
+                {
 
-        // Sets the location that the End-User's User Agent will be redirected to
-        // after the logout has been performed at the Provider
-        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}");
+                    @Override
+                    public void saveToken(CsrfToken token, HttpServletRequest request, HttpServletResponse response){
+                    log.info(2);
+                }
 
-        return oidcLogoutSuccessHandler;
+                    @Override
+                    public CsrfToken loadToken(HttpServletRequest request){
+                    log.info(3);
+                }
     }
-}
+//
+//    private LogoutSuccessHandler oidcLogoutSuccessHandler() {
+//        OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
+//                new OidcClientInitiatedLogoutSuccessHandler(this.clientRegistrationRepository);
+//
+//        // Sets the location that the End-User's User Agent will be redirected to
+//        // after the logout has been performed at the Provider
+//        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}");
+//
+//        return oidcLogoutSuccessHandler;
+//    }
 
+
+}
