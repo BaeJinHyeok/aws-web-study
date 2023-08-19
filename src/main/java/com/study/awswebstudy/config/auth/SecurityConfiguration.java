@@ -1,33 +1,21 @@
 package com.study.awswebstudy.config.auth;
 
-import com.study.awswebstudy.domain.user.UserRole;
-import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.csrf.CsrfToken;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+
 
 
 import static org.hibernate.query.sqm.tree.SqmNode.log;
-import static org.springframework.security.config.Customizer.withDefaults;
+
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity  // Spring Security() 설정들을 활성화 시켜줌.
@@ -72,23 +60,22 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    private CsrfTokenRepository customTokenRepository() {
-        implements CsrfTokenRepository {
-            @Override
-            public CsrfToken generateToken(HttpServletRequest request){
-                log.info(1);
-                {
+    public class CustomCsrfTokenRepository implements CsrfTokenRepository {
+        @Override
+        public org.springframework.security.web.csrf.CsrfToken generateToken(HttpServletRequest request){
+            log.info(1);
+            {
 
-                    @Override
-                    public void saveToken(CsrfToken token, HttpServletRequest request, HttpServletResponse response){
-                    log.info(2);
-                }
+                @Override
+                public void saveToken(CsrfToken token, HttpServletRequest request, HttpServletResponse response){
+                log.info(2);
+            }
 
-                    @Override
-                    public CsrfToken loadToken(HttpServletRequest request){
-                    log.info(3);
-                }
-    }
+                @Override
+                public CsrfToken loadToken(HttpServletRequest request){
+                log.info(3);
+            }
+            }
 //
 //    private LogoutSuccessHandler oidcLogoutSuccessHandler() {
 //        OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
