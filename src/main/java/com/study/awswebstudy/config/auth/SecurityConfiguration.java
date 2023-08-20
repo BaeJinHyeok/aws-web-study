@@ -43,7 +43,7 @@ public class SecurityConfiguration {
         http
                 //.httpBasic().disable()
                 .csrf(c -> {
-                    c.csrfTokenRepository(customTokenRepository());
+                    c.csrfTokenRepository(customTokenRepository()); //csrf 람다식으로 변경? 스프링6.x 부트 3.x
                 })
                 //.csrf().disable()
                 .oauth2Login(oauth2 -> oauth2
