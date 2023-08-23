@@ -46,8 +46,13 @@ public class SecurityConfiguration {
                     c.csrfTokenRepository(customTokenRepository()); //csrf 람다식으로 변경? 스프링6.x 부트 3.x
                 })
                 //.csrf().disable()
-                .oauth2Login(oauth2 -> oauth2
+                .oauth2Login(oauth2 -> oauth2  //Oauth2 login 구현
                         .loginPage("/login/oauth2"))
+
+                //oauth2 logout code...
+
+
+
                 //.authorizeHttpRequests(authorize -> authorize
                 //        .requestMatchers(new AntPathRequestMatcher("/", "css/**", "/image/**", "/js/**", "/h2-console/**")).permitAll())
 //                .securityContext((securityContext) -> securityContext
