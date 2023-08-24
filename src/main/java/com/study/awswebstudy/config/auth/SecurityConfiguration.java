@@ -1,7 +1,9 @@
 package com.study.awswebstudy.config.auth;
 
+import com.study.awswebstudy.domain.user.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,10 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.server.csrf.CsrfToken;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 
+import java.util.stream.Stream;
 
 import static org.hibernate.query.sqm.tree.SqmNode.log;
 
@@ -23,6 +29,44 @@ public class SecurityConfiguration {
     private ClientRegistrationRepository clientRegistrationRepository;
     private final CustomOAuth2UserService customOAuth2UserService;
 
+    private static final String[] PERMIT_ALL_PATTERNS = new String[] {
+            "/**",
+            "/css/**",
+            "/image/**",
+            "/js/**",
+            "/js/app/index.js",
+            "/oauth2/**",
+
+    };
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity httpSecurity,
+            HandlerMappingIntrospector handlerMappingIntrospector
+    ) throws Exception {
+        return httpSecurity
+                .csrf().disable()
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .loginPage("/login/oauth2")
+                        .userInfoEndpoint()
+                        .userService(new CustomOAuth2UserService())
+                )
+
+                .authorizeHttpRequests(request ->
+                        request
+                                .requestMatchers(PathRequest.toH2Console())
+                                .permitAll()
+                                .requestMatchers(
+                                        Stream
+                                                .of(PERMIT_ALL_PATTERNS)
+                                                .map(AntPathRequestMatcher::antMatcher)
+                                                .toArray(AntPathRequestMatcher[]::new)
+                                )
+                                .permitAll()
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**")).hasRole(UserRole.USER.name())
+                                .authenticated()
+                )
+        .build();
+    }
 //    @Bean
 //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        http
@@ -37,50 +81,8 @@ public class SecurityConfiguration {
 //        return http.build();
 //    }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    @
 
-        http
-                //.httpBasic().disable()
-                .csrf(c -> {
-                    c.csrfTokenRepository(customTokenRepository()); //csrf 람다식으로 변경? 스프링6.x 부트 3.x
-                })
-                //.csrf().disable()
-                .oauth2Login(oauth2 -> oauth2  //Oauth2 login 구현
-                        .loginPage("/login/oauth2"))
-
-                //oauth2 logout code...
-
-
-
-                //.authorizeHttpRequests(authorize -> authorize
-                //        .requestMatchers(new AntPathRequestMatcher("/", "css/**", "/image/**", "/js/**", "/h2-console/**")).permitAll())
-//                .securityContext((securityContext) -> securityContext
-//                        .requireExplicitSave(true)
-                .securityContext((securityContext) -> securityContext
-                        .securityContextRepository(new RequestAttributeSecurityContextRepository())
-
-                );
-
-        return http.build();
-    }
-
-    public class CustomCsrfTokenRepository implements CsrfTokenRepository {
-        @Override
-        public org.springframework.security.web.csrf.CsrfToken generateToken(HttpServletRequest request){
-            log.info(1);
-            {
-
-                @Override
-                public void saveToken(CsrfToken token, HttpServletRequest request, HttpServletResponse response){
-                log.info(2);
-            }
-
-                @Override
-                public CsrfToken loadToken(HttpServletRequest request){
-                log.info(3);
-            }
-            }
 //
 //    private LogoutSuccessHandler oidcLogoutSuccessHandler() {
 //        OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
