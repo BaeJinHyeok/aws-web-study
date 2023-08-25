@@ -44,6 +44,7 @@
                     <th>제목</th>
                     <th>작성자</th>
                     <th>최종수정일</th>
+                    <th>삭제</th>
                 </tr>
             </thread>
             <tbody id="tbody">
@@ -56,6 +57,8 @@
                     <td><a href="/posts/update/{{id}}">{{title}}</a></td>
                     <td>{{author}}</td>
                     <td>{{modifiedDate}}</td>
+                    <td><a href="/posts/update/{{id}}" role="button"
+                           class="btn btn-primary">삭제</a></td>
                 </tr>
             {{/posts}}
             </tbody>

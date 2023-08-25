@@ -46,9 +46,9 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf().disable()
                 .oauth2Login(oauth2Login -> oauth2Login
-                        .loginPage("/login/oauth2")
-                        .userInfoEndpoint()
-                        .userService(new CustomOAuth2UserService())
+                        .loginPage("/")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
+                        //.userInfoEndpoint()
+                        //.userService(customOAuth2UserService)
                 )
 
                 .authorizeHttpRequests(request ->
@@ -63,7 +63,7 @@ public class SecurityConfiguration {
                                 )
                                 .permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**")).hasRole(UserRole.USER.name())
-                                .authenticated()
+                                //.authenticated()
                 )
         .build();
     }
