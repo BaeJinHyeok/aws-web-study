@@ -29,7 +29,7 @@ public class SecurityConfiguration {
     private ClientRegistrationRepository clientRegistrationRepository;
     private final CustomOAuth2UserService customOAuth2UserService;
 
-    private static final String[] PERMIT_ALL_PATTERNS = new String[] {
+    private static final String[] PERMIT_ALL_PATTERNS = new String[] { //인가 허용 경로
             "/**",
             "/css/**",
             "/image/**",
