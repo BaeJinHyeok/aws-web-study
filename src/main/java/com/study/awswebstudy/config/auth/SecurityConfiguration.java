@@ -47,7 +47,7 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
-                        //.userInfoEndpoint()
+                        //.userInfoEndpoint() //endpoint 검색 필요
                         //.userService(customOAuth2UserService)
                 )
 
