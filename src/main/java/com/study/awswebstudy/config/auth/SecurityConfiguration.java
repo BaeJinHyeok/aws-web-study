@@ -50,7 +50,6 @@ public class SecurityConfiguration {
                         //.userInfoEndpoint() //endpoint 검색 필요
                         //.userService(customOAuth2UserService)
                 )
-
                 .authorizeHttpRequests(request ->
                         request
                                 .requestMatchers(PathRequest.toH2Console())
