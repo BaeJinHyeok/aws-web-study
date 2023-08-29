@@ -62,7 +62,7 @@ public class SecurityConfiguration {
                                 )
                                 .permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**")).hasRole(UserRole.USER.name())
-                                //.authenticated()
+                                //.authenticated() // 필요한 코드인지 확인해보아야함
                 )
         .build();
     }
