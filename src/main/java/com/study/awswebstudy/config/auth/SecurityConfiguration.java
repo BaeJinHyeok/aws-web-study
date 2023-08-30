@@ -36,6 +36,7 @@ public class SecurityConfiguration {
             "/js/**",
             "/js/app/index.js",
             "/oauth2/**",
+//            "/h2-console/**",
 
     };
     @Bean
@@ -44,7 +45,7 @@ public class SecurityConfiguration {
             HandlerMappingIntrospector handlerMappingIntrospector
     ) throws Exception {
         return httpSecurity
-                .csrf().disable()
+                .csrf((csrf) -> csrf.disable())
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
                         //.userInfoEndpoint() //endpoint 검색 필요
@@ -61,8 +62,8 @@ public class SecurityConfiguration {
                                                 .toArray(AntPathRequestMatcher[]::new)
                                 )
                                 .permitAll()
-                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**")).hasRole(UserRole.USER.name())
-                                //.authenticated() // 필요한 코드인지 확인해보아야함
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**"))//.hasRole(UserRole.USER.name())
+                                .authenticated() // 필요한 코드인지 확인해보아야함
                 )
         .build();
     }
