@@ -31,11 +31,11 @@ public class SecurityConfiguration {
 
     private static final String[] PERMIT_ALL_PATTERNS = new String[] { //인가 허용 경로
             "/**",
-            "/css/**",
-            "/image/**",
-            "/js/**",
-            "/js/app/index.js",
-            "/oauth2/**",
+//            "/css/**",
+//            "/image/**",
+//            "/js/**",
+//            "/js/app/index.js",
+//            "/oauth2/**",
 //            "/h2-console/**",
 
     };
@@ -45,7 +45,15 @@ public class SecurityConfiguration {
             HandlerMappingIntrospector handlerMappingIntrospector
     ) throws Exception {
         return httpSecurity
+                .headers(headers -> headers  //H2 Console은 보안상의 이유로 기본적으로 X-Frame-Options 헤더를 설정하여
+                        // 다른 도메인에서의 iframe 사용을 막음 - 헤더 설정을 비활성해주어야 h2-console이 i-frame 내에서도 동작하게 됨
+                        .frameOptions(frameOptions -> frameOptions
+                                .sameOrigin()
+                        )
+                )
                 .csrf((csrf) -> csrf.disable())
+                //.headers().frameOptions().sameOrigin()
+                //.headers().frameOptions().disable()
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
                         //.userInfoEndpoint() //endpoint 검색 필요
@@ -62,8 +70,8 @@ public class SecurityConfiguration {
                                                 .toArray(AntPathRequestMatcher[]::new)
                                 )
                                 .permitAll()
-                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**"))//.hasRole(UserRole.USER.name())
-                                .authenticated() // 필요한 코드인지 확인해보아야함
+                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**")).hasRole(UserRole.USER.name())
+                                //.authenticated() // 필요한 코드인지 확인해보아야함
                 )
         .build();
     }
