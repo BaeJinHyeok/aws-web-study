@@ -3,6 +3,7 @@ package com.study.awswebstudy.config.auth;
 import com.study.awswebstudy.domain.user.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONUtil;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import java.util.stream.Stream;
 
 import static org.hibernate.query.sqm.tree.SqmNode.log;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @RequiredArgsConstructor
 @Configuration
@@ -30,12 +32,14 @@ public class SecurityConfiguration {
     private final CustomOAuth2UserService customOAuth2UserService;
 
     private static final String[] PERMIT_ALL_PATTERNS = new String[] { //인가 허용 경로
-            "/**",
-//            "/css/**",
-//            "/image/**",
-//            "/js/**",
-//            "/js/app/index.js",
-//            "/oauth2/**",
+            "/",
+            "/css/**",
+            "/image/**",
+            "/js/**",
+            //"/login",
+            //"/js/app/index.js",
+            //"/oauth2/**",
+            //"/posts/**"
 //            "/h2-console/**",
 
     };
@@ -52,12 +56,12 @@ public class SecurityConfiguration {
                         )
                 )
                 .csrf((csrf) -> csrf.disable())
-                //.headers().frameOptions().sameOrigin()
-                //.headers().frameOptions().disable()
-                .oauth2Login(oauth2Login -> oauth2Login
-                        .loginPage("/")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
-                        //.userInfoEndpoint() //endpoint 검색 필요
-                        //.userService(customOAuth2UserService)
+//                .oauth2Login(withDefaults())
+                .oauth2Login(oauth2 -> oauth2//Login -> oauth2Login
+                        .loginPage("/login/oauth2")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
+//                        .loginProcessingUrl("/login")
+                                .userInfoEndpoint(userInfo -> userInfo
+                                        .userService(customOAuth2UserService))
                 )
                 .authorizeHttpRequests(request ->
                         request
@@ -71,7 +75,8 @@ public class SecurityConfiguration {
                                 )
                                 .permitAll()
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/**")).hasRole(UserRole.USER.name())
-                                //.authenticated() // 필요한 코드인지 확인해보아야함
+                                .anyRequest()
+                                .authenticated() // 필요한 코드인지 확인해보아야함
                 )
         .build();
     }

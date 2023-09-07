@@ -49,9 +49,13 @@ public class IndexController {
         // -> 이부분을 메소드 인자로 세션값을 바로 받을 수 있도록 변경 ! -> config.auth 패키지에 @LoginUser 어노테이션 생성
         // 세션값 가져오는 부분 삭제. 밑 코드 추가
 
-        if(user != null){ //세션에 저장된 값이 있을때만 model 에 userName으로 등록함. 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게됨.
+        if(user != null) { //세션에 저장된 값이 있을때만 model 에 userName으로 등록함. 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게됨.
+            if (user == null){
+                System.out.println(user.getName() + user.getEmail() + user.getPicture()+"N U L L");
+        }
             model.addAttribute("userName", user.getName());
         }
+        System.out.println(model.getAttribute("userName"));
         return "index";
     }
 }
