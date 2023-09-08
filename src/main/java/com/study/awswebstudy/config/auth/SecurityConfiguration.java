@@ -36,13 +36,14 @@ public class SecurityConfiguration {
             "/css/**",
             "/image/**",
             "/js/**",
-            //"/login",
+//            "/login/**",
             //"/js/app/index.js",
-            //"/oauth2/**",
+//            "/oauth2/**",
             //"/posts/**"
 //            "/h2-console/**",
 
     };
+
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity httpSecurity,
@@ -58,8 +59,8 @@ public class SecurityConfiguration {
                 .csrf((csrf) -> csrf.disable())
 //                .oauth2Login(withDefaults())
                 .oauth2Login(oauth2 -> oauth2//Login -> oauth2Login
-                        .loginPage("/login/oauth2")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
-//                        .loginProcessingUrl("/login")
+                          .loginPage("/")  // 로그아웃시 경로로 이동?됨 로그아웃시 localhost:8080/?logout
+//                        .loginProcessingUrl("/")
                                 .userInfoEndpoint(userInfo -> userInfo
                                         .userService(customOAuth2UserService))
                 )
