@@ -36,14 +36,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 oAuth2user.getAttributes());
 
         Users user = saveOrUpdate(attributes);
-        if (httpSession.getAttribute("user") == null) {
-            httpSession.setAttribute("user", new SessionUser(user));
-            System.out.println(httpSession.getAttribute("user")+">>>>>>>user null");
-        }
-        else{
-            System.out.println(httpSession.getAttribute("user")+">>>>>>>>user not null");
-        }
-//        httpSession.setAttribute("user", new SessionUser(user)); // setAttribute name -> SPRINGSESSION_ATTRIBUTES table의 ATTRIBUTE_NAME 값
+//        if (httpSession.getAttribute("user") == null) {
+//            httpSession.setAttribute("user", new SessionUser(user));
+//            System.out.println(httpSession.getAttribute("user")+">>>>>>>user null");
+//        }
+//        else{
+//            System.out.println(httpSession.getAttribute("user")+">>>>>>>>user not null");
+//        }
+        httpSession.setAttribute("user", new SessionUser(user)); // setAttribute name -> SPRINGSESSION_ATTRIBUTES table의 ATTRIBUTE_NAME 값
         // 세션에 사용자 정보를 저장하기 위한 DTO 클래스. User 클래스를 쓰지 않고 새로만들어 쓰는 이유는 나중에..
         //  이유 -> Failed to convert from type 에러 발생
         // 이는 세션에 저장하기위해 User 클래스를 세션에 저장하려고하니 User클래스에 직렬화를 구현하지않았다는 의미의 에러임
