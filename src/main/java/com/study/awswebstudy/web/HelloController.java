@@ -10,7 +10,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "hellow";
+        return "hello";
     }
 
     //@RequestParam 어노테이션 > 외부에서 API로 넘긴 파라미터를 가져오는 어노테이션

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor // Controller와 Serevice에서 @Autowired 를 대체해줌 final이 선언된 모든 필드를 인자값으로 하는 생성자를 대신 생성해줌 -> 의존성 관계가 변경될때마다 생성사 코드를 수정하는 번거로움 해결
+@RequiredArgsConstructor // Controller와 Service에서 @Autowired 를 대체해줌 final이 선언된 모든 필드를 인자값으로 하는 생성자를 대신 생성해줌 -> 의존성 관계가 변경될때마다 생성사 코드를 수정하는 번거로움 해결
 @Service
 public class PostsService {
 
