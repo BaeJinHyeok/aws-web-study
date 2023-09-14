@@ -34,6 +34,12 @@
         </thead>
         <tbody id="tbody">
         {{#posts}}
+            <td>
+                <input type="checkbox"
+                    {{#required}}
+                       disabled="disabled" checked="checked"
+                    {{/required}}>
+            </td>
             <!--            posts라는 List를 순회함-->
             <tr>
                 <!--                    List에서 뽑아낸 객체의 필드를 사용함-->
@@ -43,7 +49,7 @@
                 <td>{{author}}</td>
                 <td>{{modifiedDate}}</td>
                 <td><a href="/posts/update/{{id}}" role="button"
-                       class="btn btn-primary">삭제</a></td>
+                       class="btn btn-primary">수정</a></td>
             </tr>
         {{/posts}}
         </tbody>
