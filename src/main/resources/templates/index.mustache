@@ -25,6 +25,7 @@
     <table class="table table-horizontal table-bordered">
         <thead class="thead-strong">
         <tr>
+            <th></th>
             <th>게시글번호</th>
             <th>제목</th>
             <th>작성자</th>
@@ -34,14 +35,14 @@
         </thead>
         <tbody id="tbody">
         {{#posts}}
-            <td>
+            <!--            posts라는 List를 순회함-->
+            <tr>
+                <td>
                 <input type="checkbox"
                     {{#required}}
                        disabled="disabled" checked="checked"
                     {{/required}}>
-            </td>
-            <!--            posts라는 List를 순회함-->
-            <tr>
+                    </td>
                 <!--                    List에서 뽑아낸 객체의 필드를 사용함-->
                 <td>{{id}}</td>
                 <!--                    <td>{{title}}</td> 에서 밑 코드로 수정. title에 a tag를 추가함. 타이틀을 클릭하면 해당 게시글의 수정화면으로 넘어감-->
