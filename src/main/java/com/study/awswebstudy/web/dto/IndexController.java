@@ -41,6 +41,9 @@ public class IndexController {
 
     @GetMapping("/")
     public String  index(Model model){//, @LoginUser SessionUser user) { //Model -> 서버템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음. 여기서는 postsService.finAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달함
+
+        boolean required = true;
+
         model.addAttribute("posts", postsService.findAllDesc());
 
         SessionUser user = (SessionUser) httpSession.getAttribute("user"); // 앞서 작성된 CustomOAuthUserService에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성.
@@ -53,7 +56,14 @@ public class IndexController {
 
             System.out.println(user.getName() + user.getEmail() + user.getPicture()+"NOTNULL");
             model.addAttribute("userName", user.getName());
+
+            if(required){
+                required = false;
+            }
         }
+
+        model.addAttribute("required", required);
+
         System.out.println(model.getAttribute("userName")+"NULL ");
         return "index";
     }
