@@ -12,6 +12,9 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+        $('#btn-deleteall').on('click', function () {
+            _this.deleteall();
+        });
     },
     save: function () {
         var data = {
@@ -84,6 +87,62 @@ var main = {
             alert(JSON.stringify(error));
         });
     },
+    deleteall: function () {
+
+        var selectedIds = []; // 선택된 ID를 저장할 배열
+        var checkboxes = document.getElementsByClassName('checkbox');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                // 체크된 체크박스의 값을 배열에 추가
+                selectedIds.push(checkboxes[i].value);
+            }
+        }
+
+        // 선택된 ID 값을 확인 (예: 콘솔에 출력)
+        console.log('선택된 ID:', selectedIds);
+
+        // var data = {
+        //     title: $('#title').val(),
+        //     author: $('#author').val(),
+        //     content: $('#content').val()
+        // };
+        //
+        // var id = $('#id').val();
+        //
+        // $.ajax({
+        //     type: 'DELETE',
+        //     url: '/api/v1/posts/'+id,
+        //     dataType: 'json',
+        //     contentType: 'application/json; charset=utf-8',
+        //     data: JSON.stringify(data)
+        // }).done(function () {
+        //     alert('글이 삭제되었습니다.');
+        //     window.location.href = '/';
+        // }).fail(function (error) {
+        //     alert(JSON.stringify(error));
+        // });
+    },
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     // "모두 삭제" 버튼 클릭 시
+    //     document.getElementById('deleteButton').addEventListener('click', function () {
+    //         var selectedIds = []; // 선택된 ID를 저장할 배열
+    //
+    //         // 모든 체크박스에 대해 반복
+    //         var checkboxes = document.getElementsByClassName('checkbox');
+    //         for (var i = 0; i < checkboxes.length; i++) {
+    //             if (checkboxes[i].checked) {
+    //                 // 체크된 체크박스의 값을 배열에 추가
+    //                 selectedIds.push(checkboxes[i].value);
+    //             }
+    //         }
+    //
+    //         // 선택된 ID 값을 확인 (예: 콘솔에 출력)
+    //         console.log('선택된 ID:', selectedIds);
+    //
+    //         // 이후에 선택된 ID 값을 서버로 전송하거나 다른 작업을 수행할 수 있음
+    //     });
+    // })
 };
 
 main.init();

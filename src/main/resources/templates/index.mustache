@@ -38,13 +38,12 @@
         <tbody id="tbody">
         {{#posts}}
             <!--            posts라는 List를 순회함-->
-            <tr>
+            <td>
                 <td>
-
-                <input type="checkbox"
-                    {{#required}}
+                <input type="checkbox" class="checkbox"
+                    {{#delYn}}
                        disabled="disabled" checked="checked"
-                    {{/required}}>
+                    {{/delYn}}>
                 </td>
                 <!--                    List에서 뽑아낸 객체의 필드를 사용함-->
                 <td>{{id}}</td>

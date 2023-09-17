@@ -42,7 +42,7 @@ public class IndexController {
     @GetMapping("/")
     public String  index(Model model){//, @LoginUser SessionUser user) { //Model -> 서버템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음. 여기서는 postsService.finAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달함
 
-        boolean required = true;
+        boolean delYn = true;
 
         model.addAttribute("posts", postsService.findAllDesc());
 
@@ -57,13 +57,13 @@ public class IndexController {
             System.out.println(user.getName() + user.getEmail() + user.getPicture()+"NOTNULL");
             model.addAttribute("userName", user.getName());
 
-            if(required){
-                required = false;
+            if(delYn){
+                delYn = false;
             }
         }
 
-        model.addAttribute("required", required);
-
+        model.addAttribute("delYn", delYn);
+        System.out.println(model.getAttribute("delYn")+"  delYn ");
         System.out.println(model.getAttribute("userName")+"NULL ");
         return "index";
     }
