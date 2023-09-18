@@ -7,6 +7,8 @@ import com.study.awswebstudy.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
@@ -27,10 +29,13 @@ public class PostsApiController {
         postsService.delete(id);
         return id;
     }
-//    @DeleteMapping("api/v1/posts/{id}")
-//    public long deleteall(@PathVariable Long id){
-//        postsService.delete(id);
-//        return id;
+//    @DeleteMapping("api/v1/posts/{ids}")
+//    public long deleteall(@PathVariable List<Long> ids){
+//
+//        for(int i =0; i< ids.size(); i++) {
+//            postsService.delete(ids[i]);
+//        }
+//        return "Deleted IDs: " + ids.toString();
 //    }
 
     @GetMapping("/api/v1/posts/{id}")

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+//import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +58,11 @@ public class PostsService {
                                                 // postRepository 결과로 넘어온 Posts의 Stream을 map을 통해 PostListResponseDto 변환 -> List로 변환하는 메소드임.
                 .collect(Collectors.toList());
     }
+
+//    public void findAll(Pageable pageable) {
+//        postsRepository.findByUserOrderByIdDesc(createUser(), pageable
+//                .map(PostsResponseDto::from);
+//    }
 }
 
 

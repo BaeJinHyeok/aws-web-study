@@ -54,7 +54,7 @@ var main = {
                          // 수정 UPDATE - PUT ,
                          // 삭제 DELETE - DELETE
                          // 버튼 추가 생성시 -> 버튼 이벤트 등록 구현, function 구현 후 전체목록에서 수정 페이지로 이동할 수 있게 기능추가 한 다음 IndexController 에 update 메소드 추가.
-            url: '/api/v1/posts/'+id, // 어느 게시글을 수정할지 *URL Path로 구분* 하기 위해 Path에 id 를 추가함!
+            url: '/api/v1/posts/' + id, // 어느 게시글을 수정할지 *URL Path로 구분* 하기 위해 Path에 id 를 추가함!
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
@@ -76,7 +76,7 @@ var main = {
 
         $.ajax({
             type: 'DELETE',
-            url: '/api/v1/posts/'+id,
+            url: '/api/v1/posts/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
@@ -89,60 +89,38 @@ var main = {
     },
     deleteall: function () {
 
-        var selectedIds = []; // 선택된 ID를 저장할 배열
+        var ids = []; // 선택된 ID를 저장할 배열
         var checkboxes = document.getElementsByClassName('checkbox');
 
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 // 체크된 체크박스의 값을 배열에 추가
-                selectedIds.push(checkboxes[i].value);
+                // ids.push(checkboxes[i].value);
+                // alert(ids);
+                var id = checkboxes[i].parentNode.nextElementSibling.textContent;//.getAttribute('data-id');
+                ids.push(id);
             }
         }
 
         // 선택된 ID 값을 확인 (예: 콘솔에 출력)
-        console.log('선택된 ID:', selectedIds);
+        console.log('선택된 ID:', ids);
 
-        // var data = {
-        //     title: $('#title').val(),
-        //     author: $('#author').val(),
-        //     content: $('#content').val()
-        // };
-        //
-        // var id = $('#id').val();
-        //
-        // $.ajax({
-        //     type: 'DELETE',
-        //     url: '/api/v1/posts/'+id,
-        //     dataType: 'json',
-        //     contentType: 'application/json; charset=utf-8',
-        //     data: JSON.stringify(data)
-        // }).done(function () {
-        //     alert('글이 삭제되었습니다.');
-        //     window.location.href = '/';
-        // }).fail(function (error) {
-        //     alert(JSON.stringify(error));
-        // });
-    },
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     // "모두 삭제" 버튼 클릭 시
-    //     document.getElementById('deleteButton').addEventListener('click', function () {
-    //         var selectedIds = []; // 선택된 ID를 저장할 배열
-    //
-    //         // 모든 체크박스에 대해 반복
-    //         var checkboxes = document.getElementsByClassName('checkbox');
-    //         for (var i = 0; i < checkboxes.length; i++) {
-    //             if (checkboxes[i].checked) {
-    //                 // 체크된 체크박스의 값을 배열에 추가
-    //                 selectedIds.push(checkboxes[i].value);
-    //             }
-    //         }
-    //
-    //         // 선택된 ID 값을 확인 (예: 콘솔에 출력)
-    //         console.log('선택된 ID:', selectedIds);
-    //
-    //         // 이후에 선택된 ID 값을 서버로 전송하거나 다른 작업을 수행할 수 있음
-    //     });
-    // })
-};
+        $.ajax({
+            type: "DELETE", // 또는 다른 HTTP 메서드 (GET, PUT, DELETE 등)
+            url: '/api/v1/posts/' + ids,
+            dataType: "json", // 응답 데이터 타입
+            contentType: "application/json; charset=utf-8", // 요청 데이터 타입
+            data: JSON.stringify(ids), // 데이터를 JSON 배열로 변환하여 전송
+            success: function (response) {
+                // 서버 응답 처리
+                console.log("서버 응답:", response);
+            },
+            error: function (error) {
+                // 오류 처리
+                console.error("오류 발생:", error);
+            }
+        });
+    }
+}
 
 main.init();

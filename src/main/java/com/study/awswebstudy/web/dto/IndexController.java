@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+//import java.awt.print.Pageable;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
@@ -27,6 +29,11 @@ public class IndexController {
 
     private final HttpSession httpSession;
 
+//    @GetMapping("/posts")
+//    public String find(Pageable pageable){
+//        postsService.findAll(pageable);
+//        return "/";
+//    }
     @GetMapping("/posts/save")
     public String postsSave(){
         return "posts-save";

@@ -6,8 +6,9 @@
         <div class="col-md-6">
             <a href="/posts/save" role="button"
                class="btn btn-primary">글 등록</a>
-            <a href="/posts/deleteall" role="button"
-               class="btn btn-deleteall">선택 삭제</a>
+            <button type="button" class="btn btn-primary" id="btn-deleteall"> </button>
+<!--            <a href="/posts/deleteall" role="button"-->
+<!--               class="btn btn-deleteall">선택 삭제</a>-->
             {{#userName}}
                 <!--            머스테치는 다른 언어와 같은 if문(if userName != null 등)을 제공하지않음. true/false만 판단 -> 머스테치에서는 항상 최종값만 넘겨줘야함 -> userName이 있으면 노출시키도록 구성-->
                 Logged in as: <span id="user">{{userName}}</span>
