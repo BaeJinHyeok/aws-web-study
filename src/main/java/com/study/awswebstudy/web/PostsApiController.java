@@ -29,14 +29,15 @@ public class PostsApiController {
         postsService.delete(id);
         return id;
     }
-//    @DeleteMapping("api/v1/posts/{ids}")
-//    public long deleteall(@PathVariable List<Long> ids){
-//
-//        for(int i =0; i< ids.size(); i++) {
-//            postsService.delete(ids[i]);
-//        }
-//        return "Deleted IDs: " + ids.toString();
-//    }
+    @DeleteMapping("api/v2/posts/{ids}")
+    public String deleteall(@PathVariable List<Long> ids){
+
+        for(Long j: ids) System.out.println(j);
+        for(int i =0; i< ids.size(); i++) {
+            postsService.delete(ids.get(i));
+        }
+        return "Deleted IDs: " + ids.toString();
+    }
 
     @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById (@PathVariable long id){

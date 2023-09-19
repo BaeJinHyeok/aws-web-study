@@ -107,19 +107,25 @@ var main = {
 
         $.ajax({
             type: "DELETE", // 또는 다른 HTTP 메서드 (GET, PUT, DELETE 등)
-            url: '/api/v1/posts/' + ids,
+            url: '/api/v2/posts/' + ids,
             dataType: "json", // 응답 데이터 타입
             contentType: "application/json; charset=utf-8", // 요청 데이터 타입
             data: JSON.stringify(ids), // 데이터를 JSON 배열로 변환하여 전송
-            success: function (response) {
-                // 서버 응답 처리
-                console.log("서버 응답:", response);
-            },
-            error: function (error) {
-                // 오류 처리
-                console.error("오류 발생:", error);
-            }
+        }).done(function () {
+            alert('글이 모두 삭제되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
         });
+            // success: function (response) {
+            //     // 서버 응답 처리
+            //     console.log("서버 응답:", response);
+            // },
+            // error: function (error) {
+            //     // 오류 처리
+            //     console.error("오류 발생:", error);
+            // }
+        //});
     }
 }
 
