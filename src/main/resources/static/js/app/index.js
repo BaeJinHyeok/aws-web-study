@@ -102,17 +102,27 @@ var main = {
             }
         }
 
+        if(ids.length === 0) {
+            alert("선택 된 게시글이 없습니다.");
+            return;
+        }
+
         // 선택된 ID 값을 확인 (예: 콘솔에 출력)
         console.log('선택된 ID:', ids);
 
         $.ajax({
             type: "DELETE", // 또는 다른 HTTP 메서드 (GET, PUT, DELETE 등)
             url: '/api/v2/posts/' + ids,
-            dataType: "json", // 응답 데이터 타입
+            dataType: "text", // 응답 데이터 타입 // readyState = 4 , 200 정상인데 parseerror 나옴 ->  datatype을 지우거나 json에서 text로 바꿔서 해결.
             contentType: "application/json; charset=utf-8", // 요청 데이터 타입
             data: JSON.stringify(ids), // 데이터를 JSON 배열로 변환하여 전송
         }).done(function () {
-            alert('글이 모두 삭제되었습니다.');
+            if(ids.length == 1) {
+                alert("선택 된 글이 삭제되었습니다.");
+            }
+            else {
+                alert('선택 된 글이 모두 삭제되었습니다.');
+            }
             window.location.href = '/';
         }).fail(function (error) {
             alert(JSON.stringify(error));
