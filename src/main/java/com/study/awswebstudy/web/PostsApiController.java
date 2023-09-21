@@ -36,7 +36,7 @@ public class PostsApiController {
         for(int i =0; i< ids.size(); i++) {
             postsService.delete(ids.get(i));
         }
-        return "Deleted IDs: " + ids.toString();
+        return ids.toString(); //"Deleted IDs: " + ids.toString();
     }
 
     @GetMapping("/api/v1/posts/{id}")

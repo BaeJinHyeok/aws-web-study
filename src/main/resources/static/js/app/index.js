@@ -132,8 +132,8 @@ var main = {
             //     console.log("서버 응답:", response);
             // },
             // error: function (error) {
-            //     // 오류 처리
-            //     console.error("오류 발생:", error);
+                //     // 오류 처리
+                //     console.error("오류 발생:", error);
             // }
         //});
     }
