@@ -127,15 +127,15 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
-            // success: function (response) {
-            //     // 서버 응답 처리
-            //     console.log("서버 응답:", response);
-            // },
-            // error: function (error) {
-                //     // 오류 처리
-                //     console.error("오류 발생:", error);
-            // }
-        //});
+        //     success: function (response) {
+        //         // 서버 응답 처리
+        //         console.log("서버 응답:", response);
+        //     },
+        //     error: function (error) {
+        //             // 오류 처리
+        //             console.error("오류 발생:", error);
+        //     }
+        // });
     }
 }
 
