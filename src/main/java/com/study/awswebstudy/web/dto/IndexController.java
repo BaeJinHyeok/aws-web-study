@@ -7,6 +7,8 @@ import com.study.awswebstudy.service.posts.PostsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +60,18 @@ public class IndexController {
         // -> index 메소드 외에 다른 컨트롤러와 메소드에서 세션값이 필요하면 그 때마다 직접 세션에서 값을 가지고와야함 -> 같은 코드 반복 -> 불필요
         // -> 이부분을 메소드 인자로 세션값을 바로 받을 수 있도록 변경 ! -> config.auth 패키지에 @LoginUser 어노테이션 생성
         // 세션값 가져오는 부분 삭제. 밑 코드 추가
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        System.out.println(authentication);
+        System.out.println(authentication.getPrincipal());
+        // 인증되지 않은 사용자라면 경고 메시지를 모델에 추가합니다.
+        if (authentication.getPrincipal() =="anonymousUser"||authentication == null || !authentication.isAuthenticated()) {
+            model.addAttribute("warningMessage", "로그인이 필요합니다.");
+        }
+        else{
+            model.addAttribute("warningMessage", "로그인이 됐습니다.");
+        }
+        System.out.println(model.getAttribute("warningMessage"));
         if(user != null) { //세션에 저장된 값이 있을때만 model 에 userName으로 등록함. 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게됨.
 
             System.out.println(user.getName() + user.getEmail() + user.getPicture()+"NOTNULL");
