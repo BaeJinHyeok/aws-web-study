@@ -15,28 +15,6 @@ var main = {
         $('#btn-deleteall').on('click', function () {
             _this.deleteall();
         });
-        $('#btn-register').on('click', function () {
-            _this.register();
-        });
-        // document.getElementById('registerButton').addEventListener('click', function (){
-        //     //alert('로그인 되지 않았습니다. 글을 등록하려면 먼저 로그인 하세요.');
-        //     //var isLoggedIn = false;
-        //     //var userName = "{{userName}}";
-        //     // var user = document.getElementById("user");
-        //     // var userLoginYn = user.textContent;
-        //
-        //     var data = {
-        //         username: $('#userName').val()
-        //     };
-        //     var userName = data.username;
-        //
-        //     alert(userName);
-        //
-        //     if(!userName) {
-        //         alert('로그인 되지 않았습니다. 글을 등록하려면 먼저 로그인 하세요.');
-        //         return;
-        //     }
-        // });
     },
     save: function () {
         var data = {
@@ -159,23 +137,6 @@ var main = {
         //     }
         // });
     },
-    register : function () {
-        var data = {
-            username : $('#userName').val()
-        }
-
-        var username = data.username;
-
-        alert(username);
-
-        if(!username){
-            alert('로그인 되지 않았습니다. 글을 등록하려면 먼저 로그인 하세요.');
-            return;
-        }
-        else{
-            window.location.href = "/posts/save";
-        }
-    }
 }
 
 main.init();
