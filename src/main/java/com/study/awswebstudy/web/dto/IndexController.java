@@ -64,6 +64,7 @@ public class IndexController {
 
         System.out.println(authentication);
         System.out.println(authentication.getPrincipal());
+
         // 인증되지 않은 사용자라면 경고 메시지를 모델에 추가합니다.
         if (authentication.getPrincipal() =="anonymousUser"||authentication == null || !authentication.isAuthenticated()) {
             model.addAttribute("warningMessage", "로그인이 필요합니다.");
@@ -71,12 +72,15 @@ public class IndexController {
         else{
             model.addAttribute("warningMessage", "로그인이 됐습니다.");
         }
+
         System.out.println(model.getAttribute("warningMessage"));
+
         if(user != null) { //세션에 저장된 값이 있을때만 model 에 userName으로 등록함. 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게됨.
 
             System.out.println(user.getName() + user.getEmail() + user.getPicture()+"NOTNULL");
             model.addAttribute("userName", user.getName());
 
+            //로그인 사용자 userName 이 있을 경우 체크박스 활성화
             if(delYn){
                 delYn = false;
             }
