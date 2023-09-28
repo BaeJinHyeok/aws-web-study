@@ -2,11 +2,9 @@ package com.study.awswebstudy.web.dto;
 
 //import com.study.awswebstudy.config.auth.dto.LoginUser;
 import com.study.awswebstudy.config.auth.dto.SessionUser;
-import com.study.awswebstudy.domain.posts.PostsRepository;
-import com.study.awswebstudy.service.posts.PostsService;
+import com.study.awswebstudy.service.posts.PostsServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +25,7 @@ public class IndexController {
 //    }
 
 
-    private final PostsService postsService;
+    private final PostsServiceImpl postsServiceImpl;
 
     private final HttpSession httpSession;
 
@@ -43,7 +41,7 @@ public class IndexController {
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable long id, Model model){
-        PostsResponseDto dto = postsService.findById(id);
+        PostsResponseDto dto = postsServiceImpl.findById(id);
         model.addAttribute("posts", dto);
         return "posts-update";
     }
@@ -53,7 +51,7 @@ public class IndexController {
 
         boolean delYn = true;
 
-        model.addAttribute("posts", postsService.findAllDesc());
+        model.addAttribute("posts", postsServiceImpl.findAllDesc());
 
         SessionUser user = (SessionUser) httpSession.getAttribute("user"); // 앞서 작성된 CustomOAuthUserService에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성.
         // -> 세션값을 가지고 오는 부분 -> 같은 코드가 반복되는 부분! 이후에 수정이 필요하면 모든 부분을 찾아가며 수정해야함 -> 유지보수성 문제

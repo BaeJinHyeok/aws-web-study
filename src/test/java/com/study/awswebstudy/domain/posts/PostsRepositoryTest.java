@@ -2,7 +2,6 @@ package com.study.awswebstudy.domain.posts;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.study.awswebstudy.service.posts.PostsService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 //save,findAll 기능 테스트
 @ExtendWith(SpringExtension.class)
