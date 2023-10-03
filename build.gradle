@@ -49,8 +49,12 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator' // 애플리케이션 모니터링, 관리를 위한 다양한 엔드포인트 제공
 
-    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+    //mysql 연동
+    implementation 'mysql:mysql-connector-java'
+
+    //Mapper 관련 의존성 추가
+//    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+//    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 }
 
 tasks.named('test') {

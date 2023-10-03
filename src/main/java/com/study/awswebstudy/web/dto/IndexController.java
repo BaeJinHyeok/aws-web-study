@@ -2,15 +2,19 @@ package com.study.awswebstudy.web.dto;
 
 //import com.study.awswebstudy.config.auth.dto.LoginUser;
 import com.study.awswebstudy.config.auth.dto.SessionUser;
-import com.study.awswebstudy.service.posts.PostsServiceImpl;
+import com.study.awswebstudy.service.posts.PostsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 //import java.awt.print.Pageable;
 
@@ -25,7 +29,7 @@ public class IndexController {
 //    }
 
 
-    private final PostsServiceImpl postsServiceImpl;
+    private final PostsService postsService;
 
     private final HttpSession httpSession;
 
@@ -39,9 +43,11 @@ public class IndexController {
         return "posts-save";
     }
 
+    @GetMapping("/posts/save")
+    public ResponseEntity<List> save(@Param id)
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable long id, Model model){
-        PostsResponseDto dto = postsServiceImpl.findById(id);
+        PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("posts", dto);
         return "posts-update";
     }
@@ -51,7 +57,7 @@ public class IndexController {
 
         boolean delYn = true;
 
-        model.addAttribute("posts", postsServiceImpl.findAllDesc());
+        model.addAttribute("posts", postsService.findAllDesc());
 
         SessionUser user = (SessionUser) httpSession.getAttribute("user"); // 앞서 작성된 CustomOAuthUserService에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성.
         // -> 세션값을 가지고 오는 부분 -> 같은 코드가 반복되는 부분! 이후에 수정이 필요하면 모든 부분을 찾아가며 수정해야함 -> 유지보수성 문제
