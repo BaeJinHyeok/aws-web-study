@@ -8,6 +8,8 @@ import com.study.awswebstudy.web.dto.PostsUpdateRequestDto;
 import com.study.awswebstudy.web.dto.PostsListResponseDto;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +61,17 @@ public class PostsService {
                 .collect(Collectors.toList());
     }
 
+//    @Transactional
+//    public Boolean getListCheck(Pageable pageable) {
+//        Page<Posts> saved =
+//        Boolean check = saved.hasNext();
+//
+//        return check;
+//    }
+    @Transactional
+    public Page<Posts> getPostsList(Pageable pageable) {
+        return postsRepository.findAll(pageable);
+    }
 //    public void findAll(Pageable pageable) {
 //        postsRepository.findByUserOrderByIdDesc(createUser(), pageable
 //                .map(PostsResponseDto::from);

@@ -61,6 +61,20 @@
         {{/posts}}
         </tbody>
     </table>
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" >Previous</a></li>
+        <li class="page-item"><a class="page-link" >Next</a></li>
+    </ul>
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" >Previous</a></li>
+        {{#check}}
+            <li class="page-item"><a class="page-link" >Next</a></li>
+        {{/check}}
+        {{^check}}
+            <li class="page-item disabled"><a class="page-link" >Next</a></li>
+        {{/check}}
+    </ul>
 </div>
 
 {{>layout/footer}}

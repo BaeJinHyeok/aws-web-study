@@ -5,7 +5,10 @@ import com.study.awswebstudy.config.auth.dto.SessionUser;
 import com.study.awswebstudy.service.posts.PostsService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,8 +46,6 @@ public class IndexController {
         return "posts-save";
     }
 
-    @GetMapping("/posts/save")
-    public ResponseEntity<List> save(@Param id)
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable long id, Model model){
         PostsResponseDto dto = postsService.findById(id);
@@ -53,7 +54,7 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String  index(Model model){//, @LoginUser SessionUser user) { //Model -> 서버템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음. 여기서는 postsService.finAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달함
+    public String  index(Model model, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){//, @LoginUser SessionUser user) { //Model -> 서버템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음. 여기서는 postsService.finAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달함
 
         boolean delYn = true;
 
@@ -93,6 +94,8 @@ public class IndexController {
         model.addAttribute("delYn", delYn);
         System.out.println(model.getAttribute("delYn")+"  delYn ");
         System.out.println(model.getAttribute("userName")+"NULL ");
+
+        model.addAttribute("pageable", pageable);
         return "index";
     }
 }

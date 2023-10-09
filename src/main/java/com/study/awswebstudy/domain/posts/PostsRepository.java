@@ -16,6 +16,7 @@ public interface PostsRepository extends JpaRepository<Posts, Long> { // JapRe..
     //SpringDataJpa에서 제공하지 않는 메소드는 이렇게 사용가능. 이 코드는 기존 SpringDataJpa에서 제공하지만 @Query가 훨씬 가독성이 좋긴함.
     @Query("SELECT p FROM Posts p ORDER BY p.id DESC")
     List<Posts> findAllDesc();
+
 //    Page<Posts> findByUserOrderByIdDesc(Users user, Pageable pageable);
 
     // 규모가 있는 프로젝트에서는 조회용 프레임워크를 추가로 사용.
