@@ -96,6 +96,7 @@ public class IndexController {
         System.out.println(model.getAttribute("userName")+"NULL ");
 
         model.addAttribute("pageable", pageable);
+        System.out.println(model.getAttribute("pageble"));
         return "index";
     }
 }
