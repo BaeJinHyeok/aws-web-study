@@ -1,8 +1,12 @@
 package com.study.awswebstudy.web.dto;
 
 //import com.study.awswebstudy.config.auth.dto.LoginUser;
+import com.study.awswebstudy.Util.Cookies;
 import com.study.awswebstudy.config.auth.dto.SessionUser;
 import com.study.awswebstudy.service.posts.PostsService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.io.IOException;
 import java.util.List;
 
 //import java.awt.print.Pageable;
@@ -54,7 +59,24 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String  index(Model model, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){//, @LoginUser SessionUser user) { //Model -> 서버템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음. 여기서는 postsService.finAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달함
+    public String  index(Model model, HttpServletRequest request, HttpServletResponse response, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {//, @LoginUser SessionUser user) { //Model -> 서버템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있음. 여기서는 postsService.finAllDesc()로 가져온 결과를 posts로 index.mustache 에 전달함
+
+        Cookies cookies = new Cookies(request);
+
+        Cookie createCk;
+        try {
+            createCk = cookies.createCookie("test2", "testtt","localhost","/", 60);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Cookie >>>>>>" + cookies.getCookie("test"));
+        try {
+            System.out.println("Cookie >>>>>>" + cookies.getValue("test"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
         boolean delYn = true;
 
@@ -71,31 +93,42 @@ public class IndexController {
         System.out.println(authentication.getPrincipal());
 
         // 인증되지 않은 사용자라면 경고 메시지를 모델에 추가합니다.
-        if (authentication.getPrincipal() =="anonymousUser"||authentication == null || !authentication.isAuthenticated()) {
+        if (authentication.getPrincipal() == "anonymousUser" || authentication == null || !authentication.isAuthenticated()) {
             model.addAttribute("warningMessage", "로그인이 필요합니다.");
-        }
-        else{
+        } else {
             model.addAttribute("warningMessage", "로그인이 됐습니다.");
         }
 
         System.out.println(model.getAttribute("warningMessage"));
 
-        if(user != null) { //세션에 저장된 값이 있을때만 model 에 userName으로 등록함. 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게됨.
+        if (user != null) { //세션에 저장된 값이 있을때만 model 에 userName으로 등록함. 세션에 저장된 값이 없으면 model엔 아무런 값이 없는 상태이니 로그인 버튼이 보이게됨.
 
-            System.out.println(user.getName() + user.getEmail() + user.getPicture()+"NOTNULL");
+            System.out.println(user.getName() + user.getEmail() + user.getPicture() + "NOTNULL");
             model.addAttribute("userName", user.getName());
 
             //로그인 사용자 userName 이 있을 경우 체크박스 활성화
-            if(delYn){
+            if (delYn) {
                 delYn = false;
             }
         }
 
         model.addAttribute("delYn", delYn);
-        System.out.println(model.getAttribute("delYn")+"  delYn ");
-        System.out.println(model.getAttribute("userName")+"NULL ");
+        System.out.println(model.getAttribute("delYn") + "  delYn ");
+        System.out.println(model.getAttribute("userName") + "NULL ");
 
         model.addAttribute("pageable", pageable);
+        model.addAttribute("cook", createCk);
+        System.out.println("createCk"+createCk);
+        response.addCookie(createCk);
+        //response.setHeader("Set-Cookie","token=" + "TEST" +. ;Path=/; Domain=localhost; HttpOnly; Max-Age=60; SameSite=None; Secure;");
+
+        System.out.println("생성 후 Cookie >>>>>>" + cookies.getCookie("test"));
+        try {
+            System.out.println("생성 후 Cookie >>>>>>" + cookies.getValue("test"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println(model.getAttribute("pageble"));
         return "index";
     }
