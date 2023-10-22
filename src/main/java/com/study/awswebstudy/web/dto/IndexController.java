@@ -121,10 +121,11 @@ public class IndexController {
         System.out.println("createCk"+createCk);
         response.addCookie(createCk);
         //response.setHeader("Set-Cookie","token=" + "TEST" +. ;Path=/; Domain=localhost; HttpOnly; Max-Age=60; SameSite=None; Secure;");
+        Cookie[] cookiesTest = request.getCookies();
 
-        System.out.println("생성 후 Cookie >>>>>>" + cookies.getCookie("test"));
+        System.out.println("Cookie List>>>>>>" +cookiesTest);
         try {
-            System.out.println("생성 후 Cookie >>>>>>" + cookies.getValue("test"));
+            System.out.println("생성 후 Cookie >>>>>>" + cookies.getValue("test2"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
