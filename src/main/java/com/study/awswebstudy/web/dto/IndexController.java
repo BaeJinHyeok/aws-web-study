@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
 //import java.awt.print.Pageable;
 
@@ -121,9 +124,22 @@ public class IndexController {
         System.out.println("createCk"+createCk);
         response.addCookie(createCk);
         //response.setHeader("Set-Cookie","token=" + "TEST" +. ;Path=/; Domain=localhost; HttpOnly; Max-Age=60; SameSite=None; Secure;");
+        Map<String, Cookie> cookieMap = new java.util.HashMap<String, Cookie>();
         Cookie[] cookiesTest = request.getCookies();
-
+        if(cookiesTest != null){
+            for(int i = 0; i < cookiesTest.length; i++){
+                cookieMap.put(cookiesTest[i].getName(), cookiesTest[i]);
+            }
+        }
+        System.out.println("Cookie MAP>>>>>"+cookieMap);
         System.out.println("Cookie List>>>>>>" +cookiesTest);
+        System.out.println("cookiesTest>>>>>"+cookiesTest);
+        try {
+            System.out.println(URLDecoder.decode(cookieMap.toString(), "euc-kr"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
         try {
             System.out.println("생성 후 Cookie >>>>>>" + cookies.getValue("test2"));
         } catch (IOException e) {
