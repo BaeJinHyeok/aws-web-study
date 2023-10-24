@@ -134,6 +134,7 @@ public class IndexController {
         System.out.println("Cookie MAP>>>>>"+cookieMap);
         System.out.println("Cookie List>>>>>>" +cookiesTest);
         System.out.println("cookiesTest>>>>>"+cookiesTest);
+        System.out.println("exists>>>>>"+cookies.exists("test"));
         try {
             System.out.println(URLDecoder.decode(cookieMap.toString(), "euc-kr"));
         } catch (UnsupportedEncodingException e) {
