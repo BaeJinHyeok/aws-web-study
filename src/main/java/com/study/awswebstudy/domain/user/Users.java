@@ -24,6 +24,9 @@ public class Users extends BaseTimeEntity {
             
     @Column(nullable = false)
     private String email;
+
+    @Column
+    private Integer hicnt;
     
     @Column
     private String picture;
@@ -42,9 +45,10 @@ public class Users extends BaseTimeEntity {
         this.userrole = userrole;
     }
     
-    public Users update(String name, String picture){
+    public Users update(String name, String picture,Integer hitcnt){
         this.name = name;
         this.picture = picture;
+        this.hitcnt = hitcnt;
         
         return this;
     }
