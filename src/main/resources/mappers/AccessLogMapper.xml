@@ -7,7 +7,7 @@
     <mapper namespace="com.study.awswebstudy.mapper.AccessLogMapper">
 
     <insert id="create">
-        INSERT INTO t_access_log
+        INSERT INTO access_log
         (
         request_uri,
         class_name,
