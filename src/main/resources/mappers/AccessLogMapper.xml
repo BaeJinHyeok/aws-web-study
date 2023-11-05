@@ -3,4 +3,27 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+    <mapper namespace="com.study.awswebstudy.mapper.AccessLogMapper">
+
+    <insert id="create">
+        INSERT INTO t_access_log
+        (
+        request_uri,
+        class_name,
+        class_simple_name,
+        method_name,
+        remote_addr,
+        reg_dttm
+        )
+        VALUES
+        (
+        #{requestUri},
+        #{className},
+        #{classSimpleName},
+        #{methodName},
+        #{remoteAddr},
+        now()
+        )
+    </insert>
 </beans>

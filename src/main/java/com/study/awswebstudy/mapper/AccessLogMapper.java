@@ -6,6 +6,7 @@ import java.util.List;
 
 @Mapper
 public interface AccessLogMapper {
+
     void create(AccessLogDto accessLogDto);
 
     List<AccessLogDto> list();
