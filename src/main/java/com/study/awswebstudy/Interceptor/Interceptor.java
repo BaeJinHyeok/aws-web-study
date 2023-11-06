@@ -1,7 +1,9 @@
 package com.study.awswebstudy.Interceptor;
 
+import com.study.awswebstudy.Util.Cookies;
 import com.study.awswebstudy.service.posts.AccessLogService;
 import com.study.awswebstudy.web.dto.AccessLogDto;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,12 @@ public class Interceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandler(HttpServletRequest req, HttpServletResponse res, Object handler){
+
+        String nm;
+        Cookie[] cookies = req.getCookies();
+        for(Cookie cookie : cookies){
+
+        }
         return true;
     }
 
