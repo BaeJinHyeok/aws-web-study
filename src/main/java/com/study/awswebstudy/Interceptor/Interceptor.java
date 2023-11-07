@@ -24,6 +24,7 @@ public class Interceptor implements HandlerInterceptor {
         String nm;
         Cookie[] cookies = req.getCookies();
         for(Cookie cookie : cookies){
+            System.out.println(cookie);
 
         }
         return true;
