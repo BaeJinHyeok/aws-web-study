@@ -29,6 +29,8 @@ public class Interceptor implements HandlerInterceptor {
            if(nm.equals(cookie)){
                String cookName = cookie.getName();
                String cookValue = cookie.getValue();
+               System.out.println(cookName);
+               System.out.println(cookValue);
                return true;
            }
         }
