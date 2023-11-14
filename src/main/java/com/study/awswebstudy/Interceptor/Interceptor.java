@@ -40,9 +40,16 @@ public class Interceptor implements HandlerInterceptor {
                     System.out.println(cookName);
                     System.out.println(cookValue);
                 }
+                else{ // 쿠키값을 못찾았으면 쿠키 생성
+                    try {
+                        cookiesUt.createCookie("test","1","domain", "/", 3600);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
-        else{
+        else{ // 쿠키 값이 없으면 생성
             try {
                 cookiesUt.createCookie("test","1","domain", "/", 3600);
             } catch (IOException e) {
