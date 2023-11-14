@@ -30,20 +30,23 @@ public class Interceptor implements HandlerInterceptor {
         String nm = "test";
         String value;
         Cookie[] cookies = req.getCookies();
-        if(cookies != null) {
-            try {
-                cookiesUt.createCookie("test","1","domain", "/", 3600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            for (Cookie cookie : cookies) {
-                if (nm.equals(cookie)) {
+        if(cookies != null) { //가져온 쿠키값이 있으면
+
+            for (Cookie cookie : cookies) {   //쿠키 값을 순회해서 있는 값인지 판단.
+                if (nm.equals(cookie)) { // 있으면
+                    //code
                     String cookName = cookie.getName();
                     String cookValue = cookie.getValue();
                     System.out.println(cookName);
                     System.out.println(cookValue);
-                    return true;
                 }
+            }
+        }
+        else{
+            try {
+                cookiesUt.createCookie("test","1","domain", "/", 3600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         return true;
