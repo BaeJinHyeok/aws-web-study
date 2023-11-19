@@ -7,7 +7,7 @@ import java.util.List;
 public class AccessLogService {
 
     public void register(AccessLogDto accessLog) throws Exception {
-        //mapper.create(accessLog);
+        J
     }
     public List<AccessLogDto> list() throws Exception {
         //return mapper.list();

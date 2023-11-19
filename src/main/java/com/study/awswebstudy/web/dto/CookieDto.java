@@ -4,6 +4,6 @@ import com.study.awswebstudy.domain.BaseTimeEntity;
 
 public class CookieDto extends BaseTimeEntity {
 
-    private name;
-    private hitCount;
+    private String name;
+    private int hitCount;
 }

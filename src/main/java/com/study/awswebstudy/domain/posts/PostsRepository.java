@@ -17,6 +17,8 @@ public interface PostsRepository extends JpaRepository<Posts, Long> { // JapRe..
     @Query("SELECT p FROM Posts p ORDER BY p.id DESC")
     List<Posts> findAllDesc();
 
+    @Query("SELECT p.id FROM Posts p WHERE p.id = #{id}")
+    List<Posts> finePost();
 //    Page<Posts> findByUserOrderByIdDesc(Users user, Pageable pageable);
 
     // 규모가 있는 프로젝트에서는 조회용 프레임워크를 추가로 사용.
