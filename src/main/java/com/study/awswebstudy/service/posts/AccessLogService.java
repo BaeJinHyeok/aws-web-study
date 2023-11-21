@@ -6,10 +6,11 @@ import java.util.List;
 
 public class AccessLogService {
 
+
     public void register(AccessLogDto accessLog) throws Exception {
-        J
     }
     public List<AccessLogDto> list() throws Exception {
         //return mapper.list();
+//        return null;
     }
 }
