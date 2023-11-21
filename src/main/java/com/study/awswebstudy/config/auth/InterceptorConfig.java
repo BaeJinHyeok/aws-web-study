@@ -4,7 +4,7 @@ import com.study.awswebstudy.Interceptor.Interceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor1
 public class InterceptorConfig {
 
     private final accessLogservice

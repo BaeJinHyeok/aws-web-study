@@ -22,7 +22,7 @@ public class Interceptor implements HandlerInterceptor {
     private final AccessLogService accessLogService;
 
     @Override
-    public boolean preHandler(HttpServletRequest req, HttpServletResponse res, Object handler){
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler){
 
         Cookies cookiesUt = new Cookies(req);
 
