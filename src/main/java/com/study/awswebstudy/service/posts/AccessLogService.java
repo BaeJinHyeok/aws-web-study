@@ -10,7 +10,7 @@ public class AccessLogService {
     public void register(AccessLogDto accessLog) throws Exception {
     }
     public List<AccessLogDto> list() throws Exception {
-        //return mapper.list();
+        return mapper.list();
 //        return null;
     }
 }
