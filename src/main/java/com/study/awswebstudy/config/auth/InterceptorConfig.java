@@ -4,12 +4,12 @@ import com.study.awswebstudy.Interceptor.Interceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
-@RequiredArgsConstructor1
+@RequiredArgsConstructor
 public class InterceptorConfig {
 
-    private final accessLogservice
+    private final accessLogservice;
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new Interceptor(accessLogService)).addPathPatterns("/**")
+        registry.addInterceptor(new Interceptor(accessLogService)).addPathPatterns("/**").excludePathPatterns("");
     }
 }
