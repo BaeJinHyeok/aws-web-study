@@ -10,13 +10,9 @@ import java.net.http.HttpRequest;
 import java.util.Map;
 
 public class AccessLogController {
-
-
     @GetMapping("/")
     public AccessLogDto createAccessLog(HttpServletRequest request){
 
-
         String method = request.getMethod();
-
     }
 }
