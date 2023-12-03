@@ -41,8 +41,8 @@ public class PostsApiController {
 
     @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById (@PathVariable long id,
-                                      @RequestParam String st,
-                                      @RequestParam String ed){
+                                      @RequestParam (value =  "st", required = false, defaultValue = 1)
+                                      @RequestParam (value = "ed", required = false, defaultValue =  10){
         return postsService.findById(id);
     }
 }
