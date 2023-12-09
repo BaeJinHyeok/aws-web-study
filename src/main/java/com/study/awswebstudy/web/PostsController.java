@@ -11,6 +11,6 @@ public class PostsController {
     public PostsResponseDto findById (@PathVariable long id,
                                       @RequestParam(value =  "st", required = false, defaultValue = "1") Integer offset,
                                       @RequestParam (value = "ed", required = false, defaultValue =  "10") Integer limit){
-        return postsService.findById(id);
+        return .findById(id);
     }
 }
