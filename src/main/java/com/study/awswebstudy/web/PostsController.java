@@ -17,7 +17,7 @@ public class PostsController {
 
         pages.setStart(offset);
         pages.setLimit(limit);
-        int total =
+        int total = pages.getTotal();
         return .findById(id);
     }
 }
